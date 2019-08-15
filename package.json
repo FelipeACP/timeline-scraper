@@ -1,0 +1,19 @@
+{
+  "name": "timeline-scrapper",
+  "version": "1.0.0",
+  "description": "scrapper to get timeline data",
+  "main": "timeline.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "timeline"
+  ],
+  "author": "Felipe Pegado",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.19.0",
+    "excel4node": "^1.7.2",
+    "xml-js": "^1.6.11"
+  }
+}
