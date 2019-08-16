@@ -2,6 +2,9 @@
 # dependencies
 /node_modules
 
+# Ignore model files that are auto-generated
+report/model.xls
+
 # misc
 .DS_Store
 .env
@@ -10,3 +13,6 @@
 .env.test.local
 .env.production.local
 .local.js
+
+#configuration
+config.js

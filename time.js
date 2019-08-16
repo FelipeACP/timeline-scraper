@@ -35,7 +35,7 @@ const loopMonth = async () => {
     let days = [...Array(31).keys()].slice(1);
     for (let day of days) 
         await getTimeSpan(day).then((timeSpan) => month.push(timeSpan))
-    console.log(month)
+    return month;
 }
 
 exports.loopMonth = loopMonth;
