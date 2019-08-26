@@ -1,30 +1,32 @@
-const Excel = require('exceljs');
+//const Excel = require('exceljs');
+const XlsxTemplate = require('xlsx-template-ex');
 const business = require('moment-business');
 const moment = require('moment');
 const path = require('path');
 const modelSheet = path.join(__dirname, '/model.xlsx');
+const fs = require('fs');
 
-let workbook = new Excel.Workbook();
-workbook.addWorksheet("Extrato de Banco de horas");
 
 const exportToExcel = (timeSpan) => {
-    workbook.xlsx.writeFile(modelSheet)
-        .then(() => {
-            var worksheet = workbook.getWorksheet(1);
-            timeSpan.forEach((time, day) => {
-                let index1 = 4 * (day + 2);
-                let begin = time.begin ? time : null;
-                let end = time.end ? time.end : null;
-                let date = begin ? moment(begin) : null;
-                index1 = index1.toString();
-                if(date && business.isWeekDay(date)){
-                    worksheet.getCell('B' + index1).value = date.format("ddd, D MMM YY");
-                    worksheet.getCell('C' + index1).value = moment(begin).format("HH:mm");
-                    worksheet.getCell('D' + index1).value = moment(end).format("HH:mm");
-                }
-            })
+        let dates = timeSpan
+        .map((time, day) => {
+            let index1 = 4 * (day + 2);
+            let begin = time.begin ? time.begin._text : null;
+            let end = time.end ? time.end._text : null;
+            let date = begin ? moment(begin) : null;
+            index1 = index1.toString();
+            if(date && business.isWeekDay(date)){
+                date = date.format("ddd, D MMM YY");
+                begin = moment(begin).format("HH:mm");
+                end = moment(end).format("HH:mm");
+                return {date, begin, end}
+            } else return null
         })
-        .catch(e => console.error(e))
+        .filter(v => v !== null)
+        let data = {time: dates}
+        XlsxTemplate.xlsxBuildByTemplate(data, modelSheet)
+            .then((buffer) => fs.writeFileSync('./report/out.xlsx', buffer))
+            .catch((error) => console.log('xlsxHelper error:', error));
 }
 
 exports.exportToExcel = exportToExcel;

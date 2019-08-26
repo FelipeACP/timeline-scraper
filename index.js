@@ -8,7 +8,9 @@ if(d){
     getTimeSpan(day).then((timeSpan) => console.log(timeSpan));
 } else {
     loopMonth()
-        .then(timeSpan => exportToExcel(timeSpan))
+        .then(timeSpan => {
+                exportToExcel(timeSpan)
+            })
         .catch(e => console.error(e))
 };
 

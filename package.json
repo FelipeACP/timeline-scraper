@@ -16,6 +16,7 @@
     "exceljs": "^1.14.0",
     "moment-business": "^3.0.1",
     "momentjs": "^2.0.0",
+    "xlsx-template-ex": "^0.2.6",
     "xml-js": "^1.6.11"
   }
 }
